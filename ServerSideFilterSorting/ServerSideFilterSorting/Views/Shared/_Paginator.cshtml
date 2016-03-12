@@ -1,0 +1,29 @@
+﻿<nav>
+    <ul class="pagination pagination-lg">
+        <li>
+            <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" aria-label="PreviousPage">
+                <span aria-hidden="true">&lsaquo;</span>
+            </a>
+        </li>
+
+        <!-- ko foreach: [1,2,3,4,5] -->
+        <li><a href="#" data-bind="text: $data"></a></li>
+        <!-- /ko -->
+
+        <li>
+            <a href="#" aria-label="NextPage">
+                <span aria-hidden="true">&rsaquo;</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
