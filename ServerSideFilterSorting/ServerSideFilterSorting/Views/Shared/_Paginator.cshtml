@@ -1,27 +1,29 @@
-﻿<nav>
+﻿<nav data-bind="visible: DataCount() > 0 && PageSize() < DataCount()">
     <ul class="pagination pagination-lg">
-        <li>
-            <a href="#" aria-label="Previous">
+        <li data-bind="css: {disabled: PageIndex() < 1}">
+            <a href="" aria-label="First" data-bind="click: FirstPage">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
-        <li>
-            <a href="#" aria-label="PreviousPage">
+        <li data-bind="css: {disabled: PageIndex() < 1}">
+            <a href="" aria-label="PreviousPage" data-bind="click: PreviousPage">
                 <span aria-hidden="true">&lsaquo;</span>
             </a>
         </li>
 
-        <!-- ko foreach: [1,2,3,4,5] -->
-        <li><a href="#" data-bind="text: $data"></a></li>
+        <!-- ko foreach: ViewablePages -->
+        <li data-bind="css: {active: ($parent.PageIndex() + 1) === $data}">
+            <a href="" data-bind="text: $data, click: $parent.SelectPage"></a>
+        </li>
         <!-- /ko -->
 
-        <li>
-            <a href="#" aria-label="NextPage">
+        <li data-bind="css: {disabled: PageIndex() + 1 === MaxPage()}">
+            <a href="" aria-label="NextPage" data-bind="click: NextPage">
                 <span aria-hidden="true">&rsaquo;</span>
             </a>
         </li>
-        <li>
-            <a href="#" aria-label="Next">
+        <li data-bind="css: {disabled: PageIndex() + 1 === MaxPage()}">
+            <a href="" aria-label="Next" data-bind="click: LastPage">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>
