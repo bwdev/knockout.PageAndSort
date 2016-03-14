@@ -1,4 +1,5 @@
-﻿<nav data-bind="visible: DataCount() > 0 && PageSize() < DataCount()">
+﻿@*<nav data-bind="visible: DataCount() > 0 && PageSize() < DataCount()">*@
+<nav>
     <ul class="pagination pagination-lg">
         <li data-bind="css: {disabled: PageIndex() < 1}">
             <a href="" aria-label="First" data-bind="click: FirstPage">

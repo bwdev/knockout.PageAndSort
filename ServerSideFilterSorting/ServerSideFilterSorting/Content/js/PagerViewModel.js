@@ -7,22 +7,26 @@
     self.PageIndex = ko.observable(0);
     self.PageSize = ko.observable(self.DefaultPageSize());
     self.ResourceUrl = ko.observable(resourceUrl);
-    self.ServiceEndpoint = ko.computed(function () {
-        return self.ResourceUrl() + "?page=" + String(self.PageIndex() + 1) + "&pagesize=" + String(self.PageSize());
-    });
 
-    self.Sort = function () {
-
+    self.SortKey = ko.observable(null);
+    self.SortColumn = function (obj) {
+        console.log($(this));
     }
+
+    self.ServiceEndpoint = ko.computed(function () {
+        return self.ResourceUrl() + "?page=" + String(self.PageIndex() + 1) + "&pagesize=" + String(self.PageSize()) + "&sortkey=" + self.SortKey();
+
+        //sortkey?
+        //sortasc
+    });
 
     self.ChunkedPages = ko.observableArray([]);
     self.ChunkData = function () {
         for (var i = 0; i <= self.MaxPage() ; i++) {
-            console.log(i);
             var endpoint = self.ResourceUrl() + "?page=" + String(i) + "&pagesize=" + String(self.PageSize());
 
             $.getJSON(endpoint, function (data) {
-                self.ChunkedPages.push({ "page": data.page, "inventory": data.inventory });
+                self.ChunkedPages.push({ "page": data.page, "data": data.data });
             });
         }
     }
@@ -33,15 +37,20 @@
         });
 
         if (chunk != null) {
-            console.log(chunk);
-            self.Data(chunk.inventory);
+            console.log(chunk.data);
+            self.Data(chunk.data);
         }
         else {
             $.getJSON(self.ServiceEndpoint(), function (data) {
                 self.DataCount(data.count);
-                self.Data(data.inventory);
-                self.ChunkedPages.push({ "page": self.PageIndex() + 1, "inventory": data.inventory });
+                self.Data(data.data);
+                self.ChunkedPages.push({ "page": self.PageIndex() + 1, "data": data.data });
                 if (self.ChunkedPages().length === 1) self.ChunkData();
+                Object.keys(data.data).forEach(function (key, index) {
+                    // key: the name of the object key
+                    // index: the ordinal position of the key within the object 
+                    console.log(key + '  ' + String(index));
+                });
             });
         }
     }

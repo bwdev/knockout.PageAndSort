@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 
 namespace ServerSideFilterSorting.Models
 {
     public class DataGenerator
     {
-        public static List<Widget> GetData(int howMany)
+        public static List<Widget> GetData(int howMany, int skip, int take)
         {
             List<Widget> widgets = new List<Widget>();
             for (int i = 0; i < howMany; i++)
@@ -15,7 +16,8 @@ namespace ServerSideFilterSorting.Models
                 widgets.Add(new Widget { Id = i, Box = $"{i}{i}{i}{i}{i}", Jack = $"{i+1}{i + 1}{i + 1}{i + 1}{i + 1}" });
             }
 
-            return widgets;
+            Thread.Sleep(1000);
+            return widgets.Skip(skip).Take(take).ToList();
         }
 
         public static string RandomString(int length) {

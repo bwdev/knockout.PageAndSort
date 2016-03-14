@@ -1,6 +1,6 @@
 ﻿function WidgetsViewModel(obj) {
     var self = this;
-    self.Resource = ko.observable("/api/values");
+    ko.utils.extend(self, new PagerViewModel("/api/values"));
 
     self.Id = ko.observable(obj == null ? null : obj.Id);
     self.Jack = ko.observable(obj == null ? null : obj.Jack);
@@ -8,11 +8,12 @@
 
     self.Widgets = ko.observableArray([]);
 
-    self.GetData = function () {
-        $.getJSON(self.Resource(), function (data) {
-            self.Widgets(data.slice(self.pageIndex() * self.pageSize(), (self.pageIndex() * self.pageSize()) + self.pageSize()));
-        });
-    }
+    //self.GetData = function () {
+    //    console.log(self.ServiceEndpoint());
+    //    $.getJSON(self.ServiceEndpoint(), function (data) {
+    //        self.Data(data.data);
+    //    });
+    //}
 
     self.pageSize = ko.observable(100),
     self.pageIndex = ko.observable(0),

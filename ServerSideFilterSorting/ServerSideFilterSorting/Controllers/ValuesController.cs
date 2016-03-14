@@ -11,9 +11,12 @@ namespace ServerSideFilterSorting.Controllers
     public class ValuesController : ApiController
     {
         // GET api/values
-        public IEnumerable<Widget> Get()
+        public dynamic Get(int? page, int? pageSize)
         {
-            return DataGenerator.GetData(2000).OrderBy(o => o.Id);
+            page = page ?? 1;
+            pageSize = pageSize ?? 100;
+            int dataCount = 2000;
+            return new { @count = dataCount, @page = page, @pageSize = pageSize, @data = DataGenerator.GetData(dataCount, page.Value, pageSize.Value).OrderBy(o => o.Id) };
         }
     }
 }
